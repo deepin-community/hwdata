@@ -1,8 +1,8 @@
 Name: hwdata
 Summary: Hardware identification and configuration data
-Version: 0.352
+Version: 0.372
 Release: 1%{?dist}
-License: GPLv2+
+License: GPL-2.0-or-later
 Source: https://github.com/vcrhonek/hwdata/archive/v%{version}.tar.gz
 URL:    https://github.com/vcrhonek/hwdata
 BuildArch: noarch
@@ -12,11 +12,20 @@ BuildRequires: make
 hwdata contains various hardware identification and configuration data,
 such as the pci.ids and usb.ids databases.
 
+%package        devel
+Summary:        Development files for %{name}
+Requires:       %{name} = %{version}-%{release}
+
+%description    devel
+The %{name}-devel package contains files for developing applications that use
+%{name}.
+
 %prep
 %setup -q
-%configure
 
 %build
+%configure
+
 # nothing to build
 
 %install
@@ -29,7 +38,79 @@ such as the pci.ids and usb.ids databases.
 %{_prefix}/lib/modprobe.d/dist-blacklist.conf
 %{_datadir}/%{name}/*
 
+%files devel
+%{_datadir}/pkgconfig/%{name}.pc
+
 %changelog
+* Mon Jul 03 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.372-1
+- Update pci and vendor ids
+
+* Fri Jun 09 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.371-2
+- Fix -devel requires
+
+* Thu Jun 01 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.371-1
+- Update pci, usb and vendor ids
+
+* Tue May 02 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.370-1
+- Update pci, usb and vendor ids
+
+* Mon Apr 03 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.369-1
+- Update pci and vendor ids
+
+* Wed Mar 01 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.368-1
+- Update pci and vendor ids
+
+* Fri Feb 10 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.367-2
+- SPDX migration
+
+* Thu Feb 02 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.367-1
+- Update pci, usb and vendor ids
+
+* Wed Jan 04 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.366-1
+- Update pci, usb and vendor ids
+
+* Fri Dec 02 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.365-1
+- Update pci and vendor ids
+
+* Tue Nov 01 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.364-1
+- Update pci and vendor ids
+
+* Mon Oct 03 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.363-1
+- Update pci and vendor ids
+
+* Sun Sep 25 2022 Pete Walter <pwalter@fedoraproject.org> - 0.362-2
+- Move pkgconfig file to -devel subpackage (#2128591)
+
+* Wed Sep 07 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.362-1
+- Update pci and vendor ids
+
+* Mon Jul 04 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.361-1
+- Update pci and vendor ids
+
+* Wed Jun 01 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.360-1
+- Update pci, usb and vendor ids
+
+* Mon May 02 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.359-1
+- Update pci, usb and vendor ids
+
+* Mon Apr 04 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.358-1
+- Update pci, usb and vendor ids
+
+* Thu Mar 03 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.357-1
+- Update pci, usb and vendor ids
+
+* Wed Feb 02 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.356-1
+- Update pci and vendor ids
+
+* Mon Jan 03 2022 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.355-1
+- Update pci, usb and vendor ids
+
+* Fri Dec 03 2021 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.354-1
+- Update pci and vendor ids
+
+* Thu Nov 04 2021 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.353-1
+- Update pci, usb and vendor ids
+
 * Mon Oct 04 2021 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.352-1
 - Update pci and vendor ids
 

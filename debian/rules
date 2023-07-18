@@ -4,4 +4,20 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@ --buildsystem=none
+	dh $@
+
+execute_before_dh_auto_clean:
+	test -e Makefile.inc || touch Makefile.inc
+
+execute_after_dh_auto_clean:
+	rm -f Makefile.inc
+
+override_dh_auto_configure:
+	dh_auto_configure -- --disable-blacklist
+
+override_dh_auto_install:
+	# install to debian/tmp so we can pick only what we need
+	dh_auto_install --destdir=debian/tmp
+
+# the tests are only for things we do not ship
+override_dh_auto_test:

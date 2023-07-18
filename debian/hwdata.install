@@ -1,1 +1,2 @@
-pnp.ids usr/share/hwdata/
+usr/share/hwdata/pnp.ids
+usr/share/pkgconfig/hwdata.pc

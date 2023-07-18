@@ -1,14 +1,14 @@
 NAME=hwdata
 VERSION=$(shell awk '/Version:/ { print $$2 }' hwdata.spec)
 RELEASE=$(shell rpm -q --define 'dist %{nil}' --specfile --qf "%{release}" hwdata.spec)
-ifeq ($(shell git rev-parse --abbrev-ref HEAD | sed -n 's/^\([^0-9-]\+\).*/\L\1/p'), rhel)
+ifeq ($(shell git rev-parse --abbrev-ref HEAD 2>/dev/null | sed -n 's/^\([^0-9-]\+\).*/\L\1/p'), rhel)
     # add revision to tag name for rhel branches
     TAGNAME := v$(VERSION)-$(RELEASE)
 else
     TAGNAME := v$(VERSION)
 endif
 SOURCEDIR := $(shell pwd)
-ARCHIVE := $(TAGNAME).tar.bz2
+ARCHIVE := $(TAGNAME).tar.gz
 
 CVSROOT = $(shell cat CVS/Root 2>/dev/null || :)
 
@@ -31,13 +31,29 @@ Makefile.inc: configure
 	@echo "$@ generated. Run the make again."
 	@exit 1
 
-install: Makefile.inc
+hwdata.pc: hwdata.pc.in
+	datadir="$(datadir)"; \
+	if [ "$${datadir#$(prefix)}" != "$$datadir" ]; then \
+		datadir="\$${prefix}$${datadir#$(prefix)}"; \
+	fi; \
+	sed -e 's|@prefix@|$(prefix)|g' \
+		-e "s|@datadir@|$$datadir|g" \
+		-e 's|@pkgdatadir@|$${datadir}/$(NAME)|g' \
+		-e 's|@VERSION@|$(VERSION)|g' \
+		-e 's|@NAME@|$(NAME)|g' \
+		$< > $@
+
+install: Makefile.inc hwdata.pc
 	mkdir -p -m 755 $(DESTDIR)$(datadir)/$(NAME)
 	for foo in $(IDFILES) ; do \
 		install -m 644 $$foo $(DESTDIR)$(datadir)/$(NAME) ;\
 	done
-	mkdir -p -m 755 $(DESTDIR)$(libdir)/modprobe.d
-	install -m 644 -T blacklist.conf $(DESTDIR)$(libdir)/modprobe.d/dist-blacklist.conf
+	@if [ "$(blacklist)" = true ]; then \
+		mkdir -p -m 755 $(DESTDIR)$(libdir)/modprobe.d ;\
+		install -m 644 -T blacklist.conf $(DESTDIR)$(libdir)/modprobe.d/dist-blacklist.conf ;\
+	fi;
+	mkdir -p -m 755 $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 hwdata.pc $(DESTDIR)$(datadir)/pkgconfig/
 
 commit:
 	git commit -vas ||:
@@ -55,17 +71,12 @@ changelog:
 	@(GIT_DIR=.git git log > .changelog.tmp && mv .changelog.tmp ChangeLog || rm -f .changelog.tmp) || (touch ChangeLog; echo 'git directory not found: installing possibly empty changelog.' >&2)
 
 check:
-	@[ -x /sbin/lspci ] && /sbin/lspci -i pci.ids > /dev/null || { echo "FAILURE: /sbin/lspci -i pci.ids"; exit 1; } && echo "OK: /sbin/lspci -i pci.ids"
+	@lspci -i pci.ids > /dev/null || { echo "FAILURE: lspci -i pci.ids"; exit 1; } && echo "OK: lspci -i pci.ids"
 	@./check-pci-ids.py || { echo "FAILURE: ./check-pci-ids.py"; exit 1; } && echo "OK: ./check-pci-ids.py"
 	@./check-usb-ids.sh
 	@for file in $(UTF_IDFILES); do \
-	    text=`LANG=C file $$file`; \
-	    expected="$$file: UTF-8 Unicode text"; \
-	    if [[ "$$text" != "$$expected" ]]; then \
-		printf "Expected: %s\n Got instead: %s\n" "$$expected" "$$text" >&2; \
-		exit 1; \
-	    fi; \
-	    echo "OK: $$text"; \
+	    iconv -f UTF-8 "$$file" >/dev/null || { echo "FAILURE: $$file is not valid UTF-8 data"; exit 1; }; \
+	    echo "OK: $$file is valid UTF-8 data"; \
 	done
 	@echo -n "CHECK date of pci.ids: "; grep "Date:" pci.ids | cut -d ' ' -f 5
 	@echo -n "CHECK date of usb.ids: "; grep "Date:" usb.ids | cut -d ' ' -f 6
@@ -73,12 +84,12 @@ check:
 create-archive:
 	@rm -rf $(TAGNAME) $(TAGNAME).tar*  2>/dev/null
 	@make changelog
-	@git archive --format=tar --prefix=$(TAGNAME)/ HEAD > $(TAGNAME).tar
-	@mkdir $(TAGNAME)
-	@cp ChangeLog $(TAGNAME)/
-	@tar --append -f $(TAGNAME).tar $(TAGNAME)
-	@bzip2 -f $(TAGNAME).tar
-	@rm -rf $(TAGNAME)
+	@git archive --format=tar --prefix=hwdata-$(VERSION)/ HEAD > $(TAGNAME).tar
+	@mkdir hwdata-$(VERSION)
+	@cp ChangeLog hwdata-$(VERSION)/
+	@tar --append -f $(TAGNAME).tar hwdata-$(VERSION)
+	@gzip -f $(TAGNAME).tar
+	@rm -rf hwdata-$(VERSION)
 	@echo ""
 	@echo "The final archive is in $(ARCHIVE)"
 
@@ -93,8 +104,8 @@ srpm-x: create-archive
 	@echo SRPM is: $(NAME)-$(VERSION)-$(RELEASE).src.rpm
 
 clean:
-	@rm -f $(NAME)-*.gz $(NAME)-*.src.rpm pnp.ids.xlsx \
-	    *.downloaded *.utf8 *.orig
+	@rm -f $(TAGNAME)*.gz $(NAME)-*.src.rpm pnp.ids.xlsx \
+	    *.downloaded *.utf8 *.orig hwdata.pc ChangeLog clog
 
 clog: hwdata.spec
 	@sed -n '/^%changelog/,/^$$/{/^%/d;/^$$/d;s/%%/%/g;p}' $< | tee $@
@@ -108,10 +119,10 @@ pci.ids.downloaded:
 	@curl -o $@ https://raw.githubusercontent.com/pciutils/pciids/master/pci.ids
 
 oui.txt.downloaded:
-	@curl -o $@ -O http://standards-oui.ieee.org/oui/oui.txt
+	@curl -o $@ -O https://standards-oui.ieee.org/oui/oui.txt
 
 iab.txt.downloaded:
-	@curl -o $@ -O http://standards-oui.ieee.org/iab/iab.txt
+	@curl -o $@ -O https://standards-oui.ieee.org/iab/iab.txt
 
 pnp.ids.xlsx:
 	@curl -o $@ \
@@ -145,7 +156,7 @@ pnp.ids: pnp.ids.orig pnp.ids.patch
 %.utf8: %.downloaded
 	@text=`LANG=C file $?`
 	@encoding=`echo "$$text" | sed -n 's/.*\(iso-8859\S\*\|cp1[12]\d\+\).*/\1/Ip'`
-	@if [[ -n "$$encoding" ]]; then \
+	@if [ -n "$$encoding" ]; then \
 	    iconv -f "$$encoding" -t UTF-8 $?; \
 	else \
 	    cat $?; \

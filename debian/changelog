@@ -1,3 +1,10 @@
+hwdata (0.372-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Support pkg-config.
+
+ -- rewine <luhongxu@deepin.org>  Tue, 18 Jul 2023 11:22:20 +0800
+
 hwdata (0.352-1) unstable; urgency=medium
 
   * New upstream release.
