@@ -71,7 +71,8 @@ changelog:
 	@(GIT_DIR=.git git log > .changelog.tmp && mv .changelog.tmp ChangeLog || rm -f .changelog.tmp) || (touch ChangeLog; echo 'git directory not found: installing possibly empty changelog.' >&2)
 
 check:
-	@lspci -i pci.ids > /dev/null || { echo "FAILURE: lspci -i pci.ids"; exit 1; } && echo "OK: lspci -i pci.ids"
+	@lspci -A dump -O dump.name=lspci-dump.txt -i pci.ids > /dev/null || \
+		{ echo "FAILURE: lspci -A dump -O dump.name=lspci-dump.txt -i pci.ids"; exit 1; } && echo "OK: lspci -A dump -O dump.name=lspci-dump.txt -i pci.ids"
 	@./check-pci-ids.py || { echo "FAILURE: ./check-pci-ids.py"; exit 1; } && echo "OK: ./check-pci-ids.py"
 	@./check-usb-ids.sh
 	@for file in $(UTF_IDFILES); do \
@@ -104,7 +105,7 @@ srpm-x: create-archive
 	@echo SRPM is: $(NAME)-$(VERSION)-$(RELEASE).src.rpm
 
 clean:
-	@rm -f $(TAGNAME)*.gz $(NAME)-*.src.rpm pnp.ids.xlsx \
+	@rm -f $(TAGNAME)*.gz $(NAME)-*.src.rpm pnp.ids.csv \
 	    *.downloaded *.utf8 *.orig hwdata.pc ChangeLog clog
 
 clog: hwdata.spec
@@ -116,7 +117,7 @@ usb.ids.downloaded:
 	@curl -o $@ http://www.linux-usb.org/usb.ids
 
 pci.ids.downloaded:
-	@curl -o $@ https://raw.githubusercontent.com/pciutils/pciids/master/pci.ids
+	@curl -o $@ https://pci-ids.ucw.cz/v2.2/pci.ids
 
 oui.txt.downloaded:
 	@curl -o $@ -O https://standards-oui.ieee.org/oui/oui.txt
@@ -124,7 +125,7 @@ oui.txt.downloaded:
 iab.txt.downloaded:
 	@curl -o $@ -O https://standards-oui.ieee.org/iab/iab.txt
 
-pnp.ids.xlsx:
+pnp.ids.csv:
 	@curl -o $@ \
 	    https://uefi.org/uefi-pnp-export
 
@@ -140,15 +141,8 @@ oui.txt: oui.txt.utf8
 iab.txt: iab.txt.utf8
 	dos2unix -n $? $@
 
-pnp.ids.orig: pnp.ids.xlsx
-	grep "class" $? | \
-	    tr ' ' ' ' | \
-	    sed -n \
-	        -e 's/\s\{2,\}/ /g' \
-	        -e 's/\&amp;/\&/g' \
-	        -e "s/\&#039;/'/g" \
-	        -e 's:^.*<tr class=".*"><td>\(.*\)</td><td>\([a-zA-Z@]\{3\}\).*</td><td>.*$$:\2\t\1:p' | \
-	    sed 's/\s*$$//' | sort -u >$@
+pnp.ids.orig: pnp.ids.csv
+	./process-pnp-ids.py $? $@
 
 pnp.ids: pnp.ids.orig pnp.ids.patch
 	patch -p1 -o $@ pnp.ids.orig pnp.ids.patch
