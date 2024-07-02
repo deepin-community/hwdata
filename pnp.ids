@@ -145,7 +145,7 @@ APN	Appian Tech Inc
 APP	Apple Computer Inc
 APR	Aprilia s.p.a.
 APS	Autologic Inc
-APT	Audio Processing Technology Ltd
+APT	Audio Processing Technology  Ltd
 APV	A+V Link
 APX	AP Designs Ltd
 ARC	Alta Research Corporation
@@ -457,6 +457,7 @@ CSM	Cosmic Engineering Inc.
 CSO	California Institute of Technology
 CSS	CSS Laboratories
 CST	CSTI Inc
+CSW	China Star Optoelectronics Technology Co., Ltd
 CTA	CoSystems Inc
 CTC	CTC Communication Development Company Ltd
 CTE	Chunghwa Telecom Co., Ltd.
@@ -524,8 +525,10 @@ DDS	Barco, N.V.
 DDT	Datadesk Technologies Inc
 DDV	Delta Information Systems, Inc
 DEC	Digital Equipment Corporation
+DEF	DEIF A/S
 DEI	Deico Electronics
 DEL	Dell Inc.
+DEM	DemoPad Software Ltd
 DEN	Densitron Computers Ltd
 DEX	idex displays
 DFI	DFI
@@ -609,7 +612,7 @@ DTE	Dimension Technologies, Inc.
 DTI	Diversified Technology, Inc.
 DTK	Dynax Electronics (HK) Ltd
 DTL	e-Net Inc
-DTN	Datang Telephone Co
+DTN	Datang  Telephone Co
 DTO	Deutsche Thomson OHG
 DTT	Design & Test Technology, Inc.
 DTX	Data Translation
@@ -623,6 +626,7 @@ DWE	Daewoo Electronics Company Ltd
 DXC	Digipronix Control Systems
 DXD	DECIMATOR DESIGN PTY LTD
 DXL	Dextera Labs Inc
+DXN	Dixon Technologies (India) Limited
 DXP	Data Expert Corporation
 DXS	Signet
 DYC	Dycam Inc
@@ -653,6 +657,7 @@ EDM	EDMI
 EDT	Emerging Display Technologies Corp
 EEE	ET&T Technology Company Ltd
 EEH	EEH Datalink GmbH
+EEI	ELARABY COMPANY FOR ENGINEERING INDUSTRIES
 EEP	E.E.P.D. GmbH
 EES	EE Solutions, Inc.
 EGA	Elgato Systems LLC
@@ -775,7 +780,7 @@ FIN	Finecom Co., Ltd.
 FIR	Chaplet Systems Inc
 FIS	FLY-IT Simulators
 FIT	Feature Integration Technology Inc.
-FJC	Fujitsu Takamisawa Component Limited
+FJC	FCL COMPONENTS LIMITED
 FJS	Fujitsu Spain
 FJT	F.J. Tieman BV
 FLE	ADTI Media, Inc
@@ -1119,6 +1124,7 @@ ITX	integrated Technology Express Inc
 IUC	ICSL
 IVI	Intervoice Inc
 IVM	Iiyama North America
+IVO	InfoVision Optoelectronics (Kunshan) Co.,Ltd China
 IVR	Inlife-Handnet Co., Ltd.
 IVS	Intevac Photonics Inc.
 IWR	Icuiti Corporation
@@ -1263,9 +1269,11 @@ LIT	Lithics Silicon Technology
 LJX	Datalogic Corporation
 LKM	Likom Technology Sdn. Bhd.
 LLL	L-3 Communications
+LLT	LUMINO Licht Elektronik GmbH
 LMG	Lucent Technologies
 LMI	Lexmark Int'l Inc
 LMP	Leda Media Products
+LMS	Lumens Digital Optics Inc.
 LMT	Laser Master
 LNC	Lincoln Technology Solutions
 LND	Land Computer Company Ltd
@@ -1416,8 +1424,10 @@ MNC	Mini Micro Methods Ltd
 MNI	Marseille, Inc.
 MNL	Monorail Inc
 MNP	Microcom
+MNS	Maxnerva Technology Services Limited
 MOC	Matrix Orbital Corporation
 MOD	Modular Technology
+MOK	Moka International limited
 MOM	Momentum Data Systems
 MOS	Moses Corporation
 MOT	Motorola UDS
@@ -1469,6 +1479,7 @@ MTM	Motium
 MTN	Mtron Storage Technology Co., Ltd.
 MTR	Mitron computer Inc
 MTS	Multi-Tech Systems
+MTT	Moore Threads Virtual Display
 MTU	Mark of the Unicorn Inc
 MTX	Matrox
 MUD	Multi-Dimension Institute
@@ -1616,6 +1627,7 @@ OLT	Olitec S.A.
 OLV	Olitec S.A.
 OLY	OLYMPUS CORPORATION
 OMC	OBJIX Multimedia Corporation
+OMG	RODE
 OMN	Omnitel
 OMR	Omron Corporation
 ONE	Oneac Corporation
@@ -1790,6 +1802,7 @@ PXE	PIXELA CORPORATION
 PXL	The Moving Pixel Company
 PXM	Proxim Inc
 PXN	PixelNext Inc
+PXO	Pixio USA
 QCC	QuakeCom Company Ltd
 QCH	Metronics Inc
 QCI	Quanta Computer Inc
@@ -1866,14 +1879,17 @@ RMP	Research Machines
 RMS	Shenzhen Ramos Digital Technology Co., Ltd
 RMT	Roper Mobile
 RNB	Rainbow Technologies
+RNL	Reonel Oy
 ROB	Robust Electronics GmbH
 ROH	Rohm Co., Ltd.
 ROK	Rockwell International
 ROP	Roper International Ltd
 ROS	Rohde & Schwarz
 RPI	RoomPro Technologies
+RPL	Raspberry PI
 RPT	R.P.T.Intergroups
 RRI	Radicom Research Inc
+RRO	AVARRO
 RSC	PhotoTelesis
 RSH	ADC-Centre
 RSI	Rampage Systems Inc
@@ -2018,6 +2034,7 @@ SMI	SpaceLabs Medical Inc
 SMK	SMK CORPORATION
 SML	Sumitomo Metal Industries, Ltd.
 SMM	Shark Multimedia Inc
+SMN	Somnium Space Ltd.
 SMO	STMicroelectronics
 SMP	Simple Computing
 SMR	B.& V. s.r.l.
@@ -2216,6 +2233,7 @@ TMO	Terumo Corporation
 TMR	Taicom International Inc
 TMS	Trident Microsystems Ltd
 TMT	T-Metrics Inc.
+TMV	TeamViewer Germany GmbH
 TMX	Thermotrex Corporation
 TNC	TNC Industrial Company Ltd
 TNJ	DO NOT USE - TNJ

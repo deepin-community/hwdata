@@ -1,6 +1,6 @@
 Name: hwdata
 Summary: Hardware identification and configuration data
-Version: 0.372
+Version: 0.383
 Release: 1%{?dist}
 License: GPL-2.0-or-later
 Source: https://github.com/vcrhonek/hwdata/archive/v%{version}.tar.gz
@@ -42,6 +42,42 @@ The %{name}-devel package contains files for developing applications that use
 %{_datadir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri May 31 2024 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.383-1
+- Update pci and vendor ids
+
+* Thu May 02 2024 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.382-1
+- Update pci and vendor ids
+
+* Tue Apr 02 2024 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.381-1
+- Update pci, usb and vendor ids
+
+* Fri Mar 01 2024 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.380-1
+- Update pci and vendor ids
+
+* Fri Feb 02 2024 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.379-1
+- Update pci, usb and vendor ids
+
+* Wed Jan 03 2024 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.378-1
+- Update vendor ids
+
+* Mon Dec 04 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.377-2
+- Remove trailing spaces from pnp.ids (patch by Pino Toscano)
+
+* Fri Dec 01 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.377-1
+- Update pci, usb and vendor ids
+
+* Fri Nov 03 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.376-1
+- Update vendor ids
+
+* Mon Oct 02 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.375-1
+- Update pci and vendor ids
+
+* Mon Sep 04 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.374-1
+- Update pci, usb and vendor ids
+
+* Wed Aug 02 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.373-1
+- Update pci and vendor ids
+
 * Mon Jul 03 2023 Vitezslav Crhonek <vcrhonek@redhat.com> - 0.372-1
 - Update pci and vendor ids
 
